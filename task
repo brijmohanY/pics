@@ -1,3 +1,9 @@
+
+Headers = {
+                { "ApiKey", apiKeyValue },
+                { "ApiSecret", apiSecret } // Add secret to the header
+            }
+
 CreateMap<PolicyInput, PolicyInputDto>()
             .ForMember(dest => dest.filter, opt => opt.MapFrom(src => src.Filter));
 
