@@ -1,3 +1,8 @@
+CreateMap<PolicyInput, PolicyInputDto>()
+            .ForMember(dest => dest.filter, opt => opt.MapFrom(src => src.Filter));
+
+        /
+
 ### Simple Task Tracker
 
 
