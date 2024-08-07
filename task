@@ -1,4 +1,7 @@
-
+Headers = {
+                // Add Authorization header with API Key and Secret
+                Authorization = new AuthenticationHeaderValue("CustomScheme", $"{apiKey}:{apiSecret}")
+            }
 Headers = {
                 { "ApiKey", apiKeyValue },
                 { "ApiSecret", apiSecret } // Add secret to the header
