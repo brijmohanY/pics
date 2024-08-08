@@ -1,3 +1,40 @@
+
+
+public async Task<IActionResult> AddReservation(Reservation reservation)
+{
+    Reservation receivedReservation = new Reservation();
+
+    var httpClientHandler = new HttpClientHandler
+    {
+        UseProxy = true,
+        DefaultProxyCredentials = CredentialCache.DefaultCredentials // This uses the system's default proxy credentials
+    };
+
+    using (var httpClient = new HttpClient(httpClientHandler))
+    {
+        // Set the x-api-token header
+        httpClient.DefaultRequestHeaders.Add("x-api-token", "your_api_token_here");
+
+        // Serialize the reservation object to JSON
+        StringContent content = new StringContent(JsonConvert.SerializeObject(reservation), Encoding.UTF8, "application/json");
+
+        // Send the POST request
+        using (var response = await httpClient.PostAsync("https://localhost:44324/api/Reservation", content))
+        {
+            // Ensure the response is successful
+            response.EnsureSuccessStatusCode();
+
+            // Read and deserialize the response content
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            receivedReservation = JsonConvert.DeserializeObject<Reservation>(apiResponse);
+        }
+    }
+
+    return View(receivedReservation);
+}
+
+
+
 Headers = {
                 // Add Authorization header with API Key and Secret
                 Authorization = new AuthenticationHeaderValue("CustomScheme", $"{apiKey}:{apiSecret}")
